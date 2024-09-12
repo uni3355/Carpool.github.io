@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 기반 교통 혼잡 방지 카풀 시스템</title>
+    <style>
+        /* 페이지 전체 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        /* 상단 메뉴바 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        .main-content {
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* 입력창과 버튼 스타일 */
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group input {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .input-group button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #218838;
+        }
+
+        /* 우측 상단 코인 충전 영역 */
+        .coin-section {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            background-color: #007bff;
+            padding: 10px;
+        }
+
+        .coin-section button {
+            background-color: #ffc107;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .coin-section button:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 메뉴바 -->
+    <div class="navbar">
+        <div>
+            <a href="#">홈</a>
+            <a href="#">카풀 찾기</a>
+            <a href="#">코인 충전</a>
+            <a href="#">리뷰</a>
+            <a href="#">내 정보</a>
+        </div>
+        <a href="#">로그아웃</a>
+    </div>
+
+    <!-- 우측 상단 보유 코인 표시 및 충전 버튼 -->
+    <div class="coin-section">
+        보유 코인: <span id="coin-balance">100</span>
+        <button onclick="coinRecharge()">코인 충전하기</button>
+    </div>
+
+    <!-- 메인 컨텐츠: 카풀 찾기 기능 -->
+    <div class="main-content">
+        <h1>AI 기반 교통 혼잡 방지 카풀 시스템</h1>
+        <p>교통 혼잡을 줄이고, 편리하게 카풀을 찾으세요!</p>
+        
+        <!-- 출발지와 목적지 입력 -->
+        <div class="input-group">
+            <input type="text" id="start-point" placeholder="출발지를 입력하세요" />
+            <input type="text" id="end-point" placeholder="목적지를 입력하세요" />
+            <button onclick="findCarpool()">카풀 찾기</button>
+        </div>
+
+        <!-- 결과 출력 영역 -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 보유 코인 정보를 업데이트
+        function updateCoinBalance(newBalance) {
+            document.getElementById('coin-balance').textContent = newBalance;
+        }
+
+        // 코인 충전 버튼 클릭 시 실행되는 함수 (간단히 경고창으로 처리)
+        function coinRecharge() {
+            alert("코인 충전 페이지로 이동합니다.");
+            // 코인 충전 페이지로 리디렉션할 수 있음
+        }
+
+        // 카풀 찾기 버튼 클릭 시 실행되는 함수
+        function findCarpool() {
+            const startPoint = document.getElementById('start-point').value;
+            const endPoint = document.getElementById('end-point').value;
+
+            // 출발지와 목적지가 입력되었는지 확인
+            if (!startPoint || !endPoint) {
+                alert("출발지와 목적지를 입력해주세요.");
+                return;
+            }
+
+            // 로그인이 되어 있는지 확인 (간단한 체크를 위한 조건문 예시)
+            const isLoggedIn = true;  // 실제 구현에서는 로그인 상태를 확인하는 로직 추가
+
+            if (!isLoggedIn) {
+                alert("로그인 후 이용해주세요.");
+                // 로그인 페이지로 리디렉션
+                return;
+            }
+
+            // 카풀 경로 분석 및 결과 추천 (AI 분석 프로세스는 가정)
+            // 실제 경로 분석은 서버에서 처리해야 하지만, 여기서는 단순 텍스트로 결과 표시
+            const resultArea = document.getElementById('result');
+            resultArea.innerHTML = `
+                <h3>추천 경로</h3>
+                <p>출발지: ${startPoint}</p>
+                <p>목적지: ${endPoint}</p>
+                <p>최적 경로: AI 분석 중...</p>
+            `;
+
+            // 가상의 운전자 추천 리스트
+            const drivers = [
+                { name: "A", rating: 4.7, reviews: "친절하고 안전하게 운전해요!" },
+                { name: "B", rating: 4.5, reviews: "시간을 잘 지켜요." }
+            ];
+
+            // 운전자 추천 리스트 출력
+            resultArea.innerHTML += `<h3>추천 운전자 목록</h3>`;
+            drivers.forEach(driver => {
+                resultArea.innerHTML += `
+                    <p>운전자: ${driver.name}, 평점: ${driver.rating}, 리뷰: ${driver.reviews}</p>
+                `;
+            });
+        }
+    </script>
+
+</body>
+</html>
